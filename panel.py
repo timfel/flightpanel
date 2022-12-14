@@ -135,6 +135,8 @@ if __name__ == "__main__":
     if not os.path.exists(args.configfile):
         # create default config
         config["Default"] = default_config
+        config["Available Keys"] = {k:"" for k in hid.Key.__members__.keys()}
+        config["Available Modifiers"] = {k:"" for k in hid.Modifier.__members__.keys()}
         with open(args.configfile, "w") as configfile:
             config.write(configfile)
     else:

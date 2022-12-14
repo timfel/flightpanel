@@ -47,7 +47,6 @@ Key = _IntEnum(
         "tab": 0x2b,
         "spacebar": 0x2c,
         "-": 0x2d,
-        "=": 0x2e,
         ",": 0x36,
         ".": 0x37,
         "f1": 0x3a,
