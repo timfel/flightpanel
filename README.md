@@ -41,8 +41,26 @@ EOF
 
 pi@raspberrypi:~ $ sed -i 's/exit 0//' /etc/rc.local
 pi@raspberrypi:~ $ echo "/usr/bin/isticktoit_usb # libcomposite configuration" | sudo tee -a /etc/rc.local
-pi@raspberrypi:~ $ echo "/usr/bin/python /home/pi/flightpanel/panel.py /boot/flightpanel.ini" | sudo tee -a /etc/rc.local
 pi@raspberrypi:~ $ echo "exit 0" | sudo tee -a /etc/rc.local
+
+pi@raspberrypi:~ $ cat <<EOF | sudo tee -a /etc/systemd/system/flightpanel.service
+[Unit]
+Description=Flightpanel
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=root
+Restart=always
+RestartSec=1
+ExecStart=python3 /home/pi/flightpanel/panel.py /boot/flightpanel.ini
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+pi@raspberrypi:~ $ sudo systemctl enable flightpanel
 ```
 
 Test, if working, make the root filesystem read-only using raspi-config -> Performance -> Overlay file system ..

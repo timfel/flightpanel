@@ -54,7 +54,9 @@ class Switch:
 
     def check(self, keyboard):
         on = GPIO.input(self.gpio)
-        if on is not self.on:
+        if self.on_pulls_down:
+            on = not on
+        if on != self.on:
             self.on = on
             if on:
                 keyboard.send_key(self.on_key[0], modifiers=self.on_key[1])
@@ -69,7 +71,7 @@ class Switch:
             on, off = "+", "-"
         if self.name:
             r.append(self.name)
-        r.append(f"({gpio})")
+        r.append(f"({self.gpio})")
         r.append(f"{on}{self.on_key}")
         if self.off_key:
             r.append(f"{off}{self.off_key}")
@@ -78,8 +80,9 @@ class Switch:
 
 
 class SwitchPanel:
+    GPIO.setmode(GPIO.BOARD)
+
     def __init__(self, *switches):
-        GPIO.setmode(GPIO.BOARD)
         self.keyboard = hid.Keyboard(test_mode=hasattr(GPIO, "BCM"))
         self.switches = switches
 
@@ -145,14 +148,13 @@ if __name__ == "__main__":
     switches = []
     for switch, config in config["Default"].items():
         switch = switch.lower()
-        gpio = gpios[list(default_config.keys()).index(switch)]
         for idx, swconfig in enumerate(config.split(",")):
             keys = swconfig.strip().split("/")
             on_key = keys[0].strip().lower()
             off_key = keys[1].strip().lower() if len(keys) > 1 else None
             switches.append(
                 Switch(
-                    gpio,
+                    gpios.pop(),
                     on_key,
                     off_key,
                     on_pulls_down=(not switch.startswith("toggle switch")),

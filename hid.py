@@ -91,21 +91,21 @@ Key = _IntEnum(
 Modifier = _IntEnum(
     "Modifier",
     {
-        "lctrl": 0b10000000,
-        "lshift": 0b01000000,
-        "lalt": 0b00100000,
-        "lwin": 0b00010000,
-        "rctrl": 0b00001000,
-        "rshift": 0b00000100,
-        "ralt": 0b00000010,
-        "rwin": 0b00000001,
+        "lctrl": 1,
+        "lshift": 2,
+        "lalt": 4,
+        "lwin": 8,
+        "rctrl": 16,
+        "rshift": 32,
+        "ralt": 64,
+        "rwin": 128,
     },
 )
 
 
 class Keyboard:
     def __init__(self, test_mode=False):
-        if test_mode:
+        if not test_mode:
             self._hidfd = open("/dev/hidg0", "rb+")
         else:
             self._hidfd = open("test", "rb+")
