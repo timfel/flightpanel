@@ -70,9 +70,10 @@ ExecStart=python3 /home/pi/flightpanel/panel.py /boot/flightpanel.ini
 WantedBy=multi-user.target
 EOF
 
+pi@raspberrypi:~ $ git clone https://github.com/timfel/flightpanel /home/pi/flightpanel
 pi@raspberrypi:~ $ sudo systemctl enable flightpanel
 ```
 
-Test, if working, make the root filesystem read-only using raspi-config -> Performance -> Overlay file system ..
+Reboot, test, if working, make the root filesystem read-only using raspi-config -> Performance -> Overlay file system ..
 
 Config can then be done by taking the SD card out and modifying the ini file on the boot partition.
