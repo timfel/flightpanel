@@ -1,5 +1,15 @@
 RPi GPIO based flight panel
 
+Looks like this:
+![image](https://user-images.githubusercontent.com/46235/213910294-87783454-a415-4bdf-9146-35368769a118.png)
+
+Simple internal wiring, uses two USB ports to power the LEDs via an extra port:
+![image](https://user-images.githubusercontent.com/46235/213910240-749c42e3-2621-4b34-8c69-ee4717ce2462.png)
+
+The code assumes the following pin assignment:
+![image](https://user-images.githubusercontent.com/46235/213910231-b053bd69-384f-466d-a386-5fd6655a6dea.png)
+
+
 Uses the RPi as an HID keyboard, driven from GPIO inputs.
 
 Setup of the Pi from https://randomnerdtutorials.com/raspberry-pi-zero-usb-keyboard-hid/
